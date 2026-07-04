@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Reindirizzamento...</title>
+<meta name="robots" content="noindex">
+</head>
+<body>
+<p id="msg">Reindirizzamento in corso...</p>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+
+  fetch('destinazioni.json')
+    .then(r => r.json())
+    .then(destinazioni => {
+      if (id && destinazioni[id]) {
+        window.location.replace(destinazioni[id]);
+      } else {
+        document.getElementById('msg').textContent = 'QR non valido o non configurato.';
+      }
+    })
+    .catch(() => {
+      document.getElementById('msg').textContent = 'Errore di caricamento. Riprova.';
+    });
+</script>
+</body>
+</html>
