@@ -12,7 +12,9 @@
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
 
-  fetch('destinazioni.json')
+  // cache: 'no-store' + timestamp nell'URL evitano che il browser o il CDN
+  // mostrino una versione vecchia di destinazioni.json dopo una modifica
+  fetch('destinazioni.json?t=' + Date.now(), { cache: 'no-store' })
     .then(r => r.json())
     .then(destinazioni => {
       if (id && destinazioni[id]) {
